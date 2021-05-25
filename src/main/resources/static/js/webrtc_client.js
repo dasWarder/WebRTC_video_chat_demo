@@ -43,7 +43,8 @@ function start() {
         let message = JSON.parse(msg.data);
         switch (message.type) {
             case "text":
-                log('Text message from ' + message.from + ' received: ' + message.data);
+                log('Signal TEXT received');
+
                 break;
 
             case "offer":
@@ -345,4 +346,12 @@ function handleNewICECandidateMessage(message) {
     let candidate = new RTCIceCandidate(message.candidate);
     log("Adding received ICE candidate: " + JSON.stringify(candidate));
     myPeerConnection.addIceCandidate(candidate).catch(handleErrorMessage);
+}
+
+
+
+function handleNewTextMessage(message) {
+    log("The peer has text message");
+
+    myPeerConnection
 }

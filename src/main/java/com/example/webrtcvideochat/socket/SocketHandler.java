@@ -91,6 +91,17 @@ public class SocketHandler extends TextWebSocketHandler {
 
         } else if (type.equals(MSG_TYPE_TEXT.getMessageName())) {
 
+            Room rm = sessionIdToRoomMap.get(session.getId());
+
+            if(rm != null) {
+                Map<String, WebSocketSession> clients = roomService.getClients(rm);
+
+                for (Map.Entry<String, WebSocketSession> client : clients.entrySet()) {
+                    if (!client.getKey().equals(userName)) {
+                        client.getValue().sendMessage(textMessage);
+                    }
+                }
+            }
         }
     }
 
