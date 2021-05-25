@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"com.example.webrtcvideochat"},{"l":"com.example.webrtcvideochat.config"},{"l":"com.example.webrtcvideochat.controller"},{"l":"com.example.webrtcvideochat.model"},{"l":"com.example.webrtcvideochat.service"},{"l":"com.example.webrtcvideochat.socket"}];updateSearchResults();

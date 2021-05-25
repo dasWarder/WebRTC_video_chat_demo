@@ -1,0 +1,6 @@
+com.example.webrtcvideochat
+com.example.webrtcvideochat.config
+com.example.webrtcvideochat.controller
+com.example.webrtcvideochat.model
+com.example.webrtcvideochat.service
+com.example.webrtcvideochat.socket
