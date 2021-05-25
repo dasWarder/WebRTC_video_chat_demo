@@ -13,8 +13,6 @@ public interface RoomService {
 
     Optional<Room> findRoomByStringId(String id);
 
-    String getRoomId(Room room);
-
     Map<String, WebSocketSession> getClients(Room room);
 
     WebSocketSession addClient(Room room, String name, WebSocketSession session);
