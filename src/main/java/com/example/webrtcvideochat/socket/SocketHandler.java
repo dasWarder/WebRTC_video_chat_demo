@@ -5,6 +5,7 @@ import com.example.webrtcvideochat.model.WebSocketMessage;
 import com.example.webrtcvideochat.service.RoomServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
@@ -18,29 +19,33 @@ import java.util.Optional;
 
 import static com.example.webrtcvideochat.socket.Message.*;
 
+@Component
 public class SocketHandler extends TextWebSocketHandler {
 
-    @Autowired
     private RoomServiceImpl roomService;
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     private Map<String, Room> sessionIdToRoomMap = new HashMap<>();
 
+    @Autowired
+    public SocketHandler(RoomServiceImpl roomService) {
+        this.roomService = roomService;
+    }
 
     @Override
-    public void afterConnectionClosed(final WebSocketSession session, final CloseStatus status) {
+    public void afterConnectionClosed(WebSocketSession session, CloseStatus status) {
         sessionIdToRoomMap.remove(session.getId());
     }
 
     @Override
-    public void afterConnectionEstablished(final WebSocketSession session) {
+    public void afterConnectionEstablished(WebSocketSession session) {
         sendMessage(session, new WebSocketMessage("Server", MSG_TYPE_JOIN.getMessageName(),
                 Boolean.toString(!sessionIdToRoomMap.isEmpty()), null, null));
     }
 
     @Override
-    protected void handleTextMessage(final WebSocketSession session, final TextMessage textMessage) throws IOException {
+    protected void handleTextMessage(WebSocketSession session, TextMessage textMessage) throws IOException {
         WebSocketMessage message = objectMapper.readValue(textMessage.getPayload(), WebSocketMessage.class);
         String userName = message.getFrom();
         String data = message.getData();
