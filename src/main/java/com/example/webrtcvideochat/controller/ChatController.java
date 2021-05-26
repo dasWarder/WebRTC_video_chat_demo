@@ -14,7 +14,7 @@ import java.util.Optional;
 
 
 /**
- * The controller that provides end points
+ * The controller that provides endpoints
  */
 @Slf4j
 @Controller

@@ -171,4 +171,8 @@ public class SocketHandler extends TextWebSocketHandler {
             e.printStackTrace();
         }
     }
+
+    public void setSessionIdToRoomMap(Map<String, Room> sessionIdToRoomMap) {
+        this.sessionIdToRoomMap = sessionIdToRoomMap;
+    }
 }

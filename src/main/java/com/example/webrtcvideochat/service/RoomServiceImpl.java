@@ -18,7 +18,7 @@ public class RoomServiceImpl implements RoomService {
     /**
      * The field with a set of all rooms
      */
-    private final Set<Room> rooms = new TreeSet<>(Comparator.comparing(Room::getId));
+    private Set<Room> rooms = new TreeSet<>(Comparator.comparing(Room::getId));
 
     /**
      * The method that implement getRooms command.
@@ -68,10 +68,13 @@ public class RoomServiceImpl implements RoomService {
      */
     @Override
     public Map<String, WebSocketSession> getClients(Room room) {
-        log.info("Try to get the clients for the room with id={}", room.getId());
-        return Optional.ofNullable(room)
+        Map<String, WebSocketSession> result = Optional.ofNullable(room)
                 .map(r -> Collections.unmodifiableMap(r.getClients()))
                 .orElse(Collections.emptyMap());
+
+        log.info("Try to get the clients for the room with id={}", room.getId());
+
+        return result;
     }
 
     /**
@@ -84,8 +87,11 @@ public class RoomServiceImpl implements RoomService {
      */
     @Override
     public WebSocketSession addClient(Room room, String name, WebSocketSession session) {
+        WebSocketSession clientSession = room.getClients().put(name, session);
+
         log.info("Add a client with name={} to a room with id={}", name, room.getId());
-        return room.getClients().put(name, session);
+
+        return clientSession;
     }
 
     /**
@@ -99,5 +105,9 @@ public class RoomServiceImpl implements RoomService {
     public WebSocketSession removeClientByName(Room room, String name) {
         log.info("Remove a client with name={} from a room with id={}", name, room.getId());
         return room.getClients().remove(name);
+    }
+
+    public void setRooms(Set<Room> rooms) {
+        this.rooms = rooms;
     }
 }

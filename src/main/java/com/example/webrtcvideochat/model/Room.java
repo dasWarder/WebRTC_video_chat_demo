@@ -1,8 +1,6 @@
 package com.example.webrtcvideochat.model;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.*;
 import org.springframework.web.socket.WebSocketSession;
 
 import javax.validation.constraints.NotNull;
@@ -13,7 +11,9 @@ import java.util.Map;
 /**
  * The class for the rooms entities
  */
+@Setter
 @Getter
+@Builder
 @ToString
 @EqualsAndHashCode
 public class Room {
